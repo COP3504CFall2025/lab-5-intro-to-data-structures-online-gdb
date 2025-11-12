@@ -1,0 +1,4 @@
+C:/Users/josep/Documents/Cpp/Classtivity_2/lab-5-intro-to-data-structures-online-gdb/build/CMakeFiles/RunMain.dir
+C:/Users/josep/Documents/Cpp/Classtivity_2/lab-5-intro-to-data-structures-online-gdb/build/CMakeFiles/RunTests.dir
+C:/Users/josep/Documents/Cpp/Classtivity_2/lab-5-intro-to-data-structures-online-gdb/build/CMakeFiles/edit_cache.dir
+C:/Users/josep/Documents/Cpp/Classtivity_2/lab-5-intro-to-data-structures-online-gdb/build/CMakeFiles/rebuild_cache.dir
