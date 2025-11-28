@@ -42,7 +42,7 @@ public:
         return *this;
     }
 
-    ABS(ABS&& other) noexcept : array_(other.array_), curr_size_(other.curr_size_), capacity_(other.capacity_) {
+    ABS(ABS&& other) noexcept : capacity_(other.capacity_), curr_size_(other.curr_size_), array_(other.array_) {
         other.array_ = nullptr;
         other.curr_size_ = 0;
         other.capacity_ = 0;
