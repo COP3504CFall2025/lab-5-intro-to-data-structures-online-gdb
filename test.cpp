@@ -5,19 +5,23 @@
 #include <stdexcept>
 #include <vector>
 
-#include "Interfaces.hpp" 
 
 
-
+/*
 int main() {
 
 
     return 0;
 }
 
+//*/
 
-/*
-LINKED LIST TEST
+
+//* LINKED LIST TEST
+
+#include "LinkedList.hpp" 
+
+
 int main() {
 
     LinkedList<int> myLL;
@@ -46,4 +50,4 @@ int main() {
     return 0;
 }
 
-*/
+//*/

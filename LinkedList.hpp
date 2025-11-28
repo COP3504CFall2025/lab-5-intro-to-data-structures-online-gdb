@@ -118,6 +118,8 @@ public:
 		return true;
 	}
 
+	void clear() {Clear();}
+
 	void Clear() {
 		Node* cursor = head;
 
