@@ -111,11 +111,11 @@ public:
     T pop() override {
         T result = peek();
 
-        if (curr_size_ < capacity_/4) {
+        curr_size_--;
+
+        if (curr_size_ < capacity_/scale_factor_) {
             capacity_ /= scale_factor_;
         }
-
-        curr_size_--;
 
         return result;
     }
