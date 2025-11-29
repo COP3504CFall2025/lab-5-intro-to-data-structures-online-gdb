@@ -49,7 +49,7 @@ public:
     }
 
 
-    ABQ(ABQ&& other) noexcept {
+    ABQ(ABQ&& other) noexcept : capacity_(other.capacity_), curr_size_(other.curr_size_), array_(other.array_) {
         other.array_ = nullptr;
         other.curr_size_ = 0;
         other.capacity_ = 0;
