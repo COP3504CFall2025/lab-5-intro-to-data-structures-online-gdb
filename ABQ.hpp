@@ -17,7 +17,7 @@ class ABQ : public QueueInterface<T>{
 
 public:
     // Constructors + Big 5
-    ABQ()  : ABq(1) {}
+    ABQ()  : ABQ(1) {}
     
     explicit ABQ(const size_t capacity) : capacity_(capacity), curr_size_(0) {
         array_ = new T[capacity_];
@@ -126,7 +126,7 @@ public:
 
         delete[] array_;
         array_ = new_array;
-        
+
         curr_size_--;
 
         if (curr_size_ < capacity_/scale_factor_) {
