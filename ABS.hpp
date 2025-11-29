@@ -113,6 +113,10 @@ public:
 
         curr_size_--;
 
+        if (curr_size_ < capacity_/4) {
+            capacity_ /= scale_factor_;
+        }
+
         return result;
     }
 
