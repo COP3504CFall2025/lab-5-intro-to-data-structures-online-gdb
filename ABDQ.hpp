@@ -8,7 +8,7 @@
 
 template <typename T>
 class ABDQ : public DequeInterface<T> {
-private:
+public:
     T* data_;                 // underlying dynamic array
     std::size_t capacity_;    // total allocated capacity
     std::size_t size_;        // number of stored elements
@@ -16,7 +16,7 @@ private:
     std::size_t back_;        // index after the last element (circular)
 
     static constexpr std::size_t SCALE_FACTOR = 2;
-    
+
     //Covers negative cases (for example, -1 % 5)
     size_t mod(size_t a, size_t b) {
         if (a < 0) {
@@ -29,11 +29,13 @@ private:
     void size_up() {
         if (size_ >= capacity_) {
             size_t old_capacity = capacity_;
+            size_t old_front = front_;
+            if (front_ <= back_) front_ += capacity_ * (SCALE_FACTOR-1);
             capacity_ *= SCALE_FACTOR;
 
             T* new_data = new T[capacity_];
             for (size_t i=0;i< size_;i++) {
-                new_data[index(i)] = data_[(front_ + i) % old_capacity];
+                new_data[index(i)] = data_[(old_front + i) % old_capacity];
             }
             delete[] data_;
             data_ = new_data;
