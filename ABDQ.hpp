@@ -4,6 +4,7 @@
 #include <stdexcept>
 #include "Interfaces.hpp"
 #include <utility>
+#include <cmath>
 
 template <typename T>
 class ABDQ : public DequeInterface<T> {
@@ -15,7 +16,15 @@ private:
     std::size_t back_;        // index after the last element (circular)
 
     static constexpr std::size_t SCALE_FACTOR = 2;
-
+    
+    //Covers negative cases (for example, -1 % 5)
+    size_t mod(size_t a, size_t b) {
+        if (a < 0) {
+            a += std::ceil(std::abs(static_cast<double>(a)/b)) * b;
+        }
+    
+        return a % b;
+    }
 
     void size_up() {
         if (size_ >= capacity_) {
@@ -109,7 +118,7 @@ public:
     // Insertion
     void pushFront(const T& item) override {
         size_up();
-        front_ = (front_-1) % capacity_;
+        front_ = mod((front_-1), capacity_);
         
         data_[front_] = item;
         size_++;
@@ -137,7 +146,7 @@ public:
         T result = back();
     
         size_down();
-        back_ = (back_-1) % capacity_;
+        back_ = mod((back_-1), capacity_);
         size_--;
 
         return result;
