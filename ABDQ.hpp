@@ -18,7 +18,7 @@ public:
     static constexpr std::size_t SCALE_FACTOR = 2;
 
     //Covers negative cases (for example, -1 % 5)
-    size_t mod(size_t a, size_t b) {
+    size_t mod(int a, size_t b) {
         if (a < 0) {
             a += std::ceil(std::abs(static_cast<double>(a)/b)) * b;
         }
