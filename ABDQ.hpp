@@ -127,12 +127,12 @@ public:
     }
 
     void pushBack(const T& item) override {
-        data_[back_] = item;
-        size_++;
-        
         size_up();
+        data_[back_] = item;
+
         back_ = (back_+1) % capacity_;
-        
+
+        size_++;
     }
 
     // Deletion

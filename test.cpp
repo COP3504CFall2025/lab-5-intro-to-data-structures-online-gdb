@@ -15,21 +15,13 @@ int main() {
 
     ABDQ<int> dq;
 
-    dq.pushFront(12);
-    dq.pushFront(11);
-    dq.pushFront(10);
-    dq.pushFront(9);
-    dq.pushFront(8);
-    dq.pushFront(7);
-    dq.pushFront(6);
-    dq.pushFront(5);
-    dq.pushFront(4);
-    dq.pushFront(3);
-    dq.pushFront(2);
-    dq.pushFront(1);
-    dq.pushFront(0);
+    for (int i=1; i< 10; i++) {
+        dq.pushBack(i);
+    }
+    
 
     std::cout << "cap: " << dq.capacity_ << std::endl;
+    
 
 
 
