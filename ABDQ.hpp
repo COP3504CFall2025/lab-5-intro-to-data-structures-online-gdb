@@ -19,11 +19,12 @@ private:
 
     void size_up() {
         if (size_ >= capacity_) {
+            size_t old_capacity = capacity_;
             capacity_ *= SCALE_FACTOR;
 
             T* new_data = new T[capacity_];
             for (size_t i=0;i< size_;i++) {
-                new_data[index(i)] = data_[index(i)];
+                new_data[index(i)] = data_[(front_ + i) % old_capacity];
             }
             delete[] data_;
             data_ = new_data;
@@ -32,11 +33,12 @@ private:
 
     void size_down() {
         if (size_ < capacity_/SCALE_FACTOR) {
+            size_t old_capacity = capacity_;
             capacity_ /= SCALE_FACTOR;
 
             T* new_data = new T[capacity_];
             for (size_t i=0;i< size_;i++) {
-                new_data[index(i)] = data_[index(i)];
+                new_data[index(i)] = data_[(front_ + i) % old_capacity];
             }
             delete[] data_;
             data_ = new_data;
