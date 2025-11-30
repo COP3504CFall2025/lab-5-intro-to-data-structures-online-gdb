@@ -101,6 +101,7 @@ public:
     ABDQ& operator=(ABDQ&& other) noexcept {
         if (this == &other) return *this;
 
+        delete[] data_;
         data_ = other.data_;
         capacity_ = other.capacity_;
         size_ = other.size_;
