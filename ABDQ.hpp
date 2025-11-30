@@ -22,7 +22,7 @@ private:
             capacity_ *= SCALE_FACTOR;
 
             T* new_data = new T[capacity_];
-            for (int i=0;i< size_;i++) {
+            for (size_t i=0;i< size_;i++) {
                 new_data[index(i)] = data_[index(i)];
             }
             delete[] data_;
@@ -35,7 +35,7 @@ private:
             capacity_ /= SCALE_FACTOR;
 
             T* new_data = new T[capacity_];
-            for (int i=0;i< size_;i++) {
+            for (size_t i=0;i< size_;i++) {
                 new_data[index(i)] = data_[index(i)];
             }
             delete[] data_;
