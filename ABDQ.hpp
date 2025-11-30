@@ -16,29 +16,144 @@ private:
 
     static constexpr std::size_t SCALE_FACTOR = 2;
 
+
+    void size_up() {
+        if (size_ >= capacity_) {
+            capacity_ *= SCALE_FACTOR;
+
+            T* new_data = new T[capacity_];
+            for (int i=0;i< size_;i++) {
+                new_data[index(i)] = data_[index(i)];
+            }
+            delete[] data_;
+            data_ = new_data;
+        }
+    }
+
+    void size_down() {
+        if (size_ < capacity_/SCALE_FACTOR) {
+            capacity_ /= SCALE_FACTOR;
+
+            T* new_data = new T[capacity_];
+            for (int i=0;i< size_;i++) {
+                new_data[index(i)] = data_[index(i)];
+            }
+            delete[] data_;
+            data_ = new_data;
+        }
+    }
+
+    size_t index(size_t i) {return (front_ + i) % capacity_;}
+
+
 public:
     // Big 5
-    ABDQ();
-    explicit ABDQ(std::size_t capacity);
-    ABDQ(const ABDQ& other);
-    ABDQ(ABDQ&& other) noexcept;
-    ABDQ& operator=(const ABDQ& other);
-    ABDQ& operator=(ABDQ&& other) noexcept;
-    ~ABDQ() override;
+    ABDQ() : ABDQ(4) {}
+
+    explicit ABDQ(std::size_t capacity) : capacity_(capacity), size_(0), front_(0), back_(0) {
+        data_ = new T[capacity_];
+    }
+
+    ABDQ(const ABDQ& other) : capacity_(other.capacity_), size_(other.size_), front_(other.front_), back_(other.back_) {
+        data_ = new T[capacity_];
+
+        for (size_t i = 0; i < size_; i++) {
+            data_[index(i)] = other.data_[index(i)];
+        }
+    }
+
+    ABDQ(ABDQ&& other) noexcept : data_(other.data_), capacity_(other.capacity_), size_(other.size_), front_(other.front_), back_(other.back_){
+        other.data_ = nullptr;
+        other.capacity_ = other.size_ = other.front_ = other.back_ = 0;
+    }
+
+    ABDQ& operator=(const ABDQ& other) {
+        if (this == &other) return *this;
+
+        T* new_data = new T[other.capacity_];
+        for (size_t i = 0; i < other.size_; i++) {
+            size_t index = (other.front_ + i) % other.capacity_;
+            new_data[index] = other.data_[index];
+        }
+        delete[] data_;
+        data_ = new_data;
+
+        capacity_ = other.capacity_;
+        size_ = other.size_;
+        front_ = other.front_;
+        back_ = other.back_;
+
+        return *this;
+    }
+    ABDQ& operator=(ABDQ&& other) noexcept {
+        if (this == &other) return *this;
+
+        data_ = other.data_;
+        capacity_ = other.capacity_;
+        size_ = other.size_;
+        front_ = other.front_;
+        back_ = other.back_;
+
+        other.data_ = nullptr;
+        other.capacity_ = other.size_ = other.front_ = other.back_ = 0;
+
+        return *this;
+    }
+
+    ~ABDQ() override {
+        delete[] data_;
+    }
 
     // Insertion
-    void pushFront(const T& item) override;
-    void pushBack(const T& item) override;
+    void pushFront(const T& item) override {
+        size_up();
+        front_ = (front_-1) % capacity_;
+        
+        data_[front_] = item;
+        size_++;
+    }
+
+    void pushBack(const T& item) override {
+        data_[back_] = item;
+        size_++;
+        
+        size_up();
+        back_ = (back_+1) % capacity_;
+        
+    }
 
     // Deletion
-    T popFront() override;
-    T popBack() override;
+    T popFront() override {
+        T result = front();
+
+        size_down();
+        front_ = (front_+1) % capacity_;
+        size_--;
+        return result;
+    }
+    T popBack() override {
+        T result = back();
+    
+        size_down();
+        back_ = (back_-1) % capacity_;
+        size_--;
+
+        return result;
+    }
 
     // Access
-    const T& front() const override;
-    const T& back() const override;
+    const T& front() const override {
+        if (size_ == 0) throw std::runtime_error("Empty");
+        return data_[front_];
+    }
+    const T& back() const override {
+        if (size_ == 0) throw std::runtime_error("Empty");
+        return data_[(back_-1)%capacity_];
+    }
 
     // Getters
-    std::size_t getSize() const noexcept override;
+    std::size_t getSize() const noexcept override {return size_;}
+
+    void shrinkIfNeeded() {size_down();}
 
 };
